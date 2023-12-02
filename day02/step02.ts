@@ -1,4 +1,4 @@
-import { runExercice } from '../.devcontainer/util.ts';
+import { runExercice } from '../util.js';
 import { input } from './input.ts';
 
 const sum = runExercice(input, (ret, line) => {
