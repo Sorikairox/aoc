@@ -1,0 +1,9 @@
+{
+  "image": "denoland/deno:latest",
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "extensions": [
+        "denoland.vscode-deno"
+    ]
+}
