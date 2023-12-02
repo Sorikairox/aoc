@@ -1,4 +1,4 @@
-import { input } from './input.ts';
+import { input } from './input.js';
 
 const total = input.split('\n').filter(p => p.length > 0).reduce((ret: number, line: string) => {
     const parsedNumber = line.replace(/\D/g, '');

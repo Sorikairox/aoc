@@ -1,4 +1,4 @@
-import { input } from './input.ts';
+import { input } from './input.js';
 
 const getGameId = (line: string) => {
     const regex = /Game (\d+)/;

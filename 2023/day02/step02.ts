@@ -1,5 +1,5 @@
-import { runExercice } from '../util.js';
-import { input } from './input.ts';
+import { runExercice } from '../../util.js';
+import { input } from './input.js';
 
 const sum = runExercice(input, (ret, line) => {
     const minPerColor = {
