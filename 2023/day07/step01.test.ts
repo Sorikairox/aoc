@@ -18,6 +18,11 @@ Deno.test("Card recognition", async (ctx) => {
         assertEquals(getHandData(hand), { rank: HAND_RANK.TWO_PAIR, cards: 'KTJJT', bid: 555 });
     })
 
+    await ctx.step('Recognize two pairs', async () => {
+        const hand = `TKJJT 555`;
+        assertEquals(getHandData(hand), { rank: HAND_RANK.TWO_PAIR, cards: 'TKJJT', bid: 555 });
+    })
+
     await ctx.step('Recognize three of a kind', async () => {
         const hand = `T55J5 555`;
         assertEquals(getHandData(hand), { rank: HAND_RANK.THREE_OF_A_KIND, cards: 'T55J5', bid: 555 });

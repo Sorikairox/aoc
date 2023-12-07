@@ -30,38 +30,35 @@ const CARD_VALUE: Record<string, number> = {
 export const getHandData = (hand: string) => {
   let [cards, bidAsString] = hand.split(' ');
   const bid = Number(bidAsString);
-  const cardsOccurence: Record<string, number> = {};
+  const cardsOccurence: Map<string, number> = new Map();
 
   for (const card of cards) {
-    if (!cardsOccurence[card]) {
-      cardsOccurence[card] = 0;
+    if (!cardsOccurence.has(card)) {
+      cardsOccurence.set(card, 0);
     }
-    cardsOccurence[card] += 1;
+    cardsOccurence.set(card, (cardsOccurence.get(card)!) + 1);
   }
 
-  const distinctCardNumber = Object.keys(cardsOccurence).length;
+  const handStructure = Array.from(cardsOccurence.values()).sort().join('');
 
-  if (distinctCardNumber === 5) {
+  if (handStructure.length === 5) {
 
     return { rank: HAND_RANK.HIGH_CARD, cards, bid  }
 
-  } else if (distinctCardNumber === 4) {
+  } else if (handStructure.length === 4) {
 
     return { rank: HAND_RANK.ONE_PAIR, cards, bid};
 
-  } else if (distinctCardNumber === 3) {
+  } else if (handStructure.length === 3) {
 
-    const cardsInHand = Object.keys(cardsOccurence);
-    if (cardsOccurence[cardsInHand[0]] === 1 || cardsOccurence[cardsInHand[0]] === 2) {
+    if (handStructure === '122') {
       return { rank: HAND_RANK.TWO_PAIR, cards, bid};
     }
     return { rank: HAND_RANK.THREE_OF_A_KIND, cards, bid};
 
-  } else if (distinctCardNumber === 2) {
+  } else if (handStructure.length === 2) {
 
-    const cardsInHand = Object.keys(cardsOccurence);
-
-    if (cardsOccurence[cardsInHand[0]] === 2 || cardsOccurence[cardsInHand[0]] === 3) {
+    if (handStructure === '23') {
       return { rank: HAND_RANK.FULL_HOUSE, cards, bid};
     }
     return { rank: HAND_RANK.FOUR_OF_A_KIND, cards, bid};
