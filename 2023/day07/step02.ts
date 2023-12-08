@@ -21,7 +21,7 @@ const CARD_VALUE: Record<string, number> = {
     '8': 8,
     '9': 9,
     'T': 10,
-    'J': 11,
+    'J': 1,
     'Q': 12,
     'K': 13,
     'A': 14,
@@ -39,7 +39,23 @@ export const getHandData = (hand: string) => {
     cardsOccurence.set(card, (cardsOccurence.get(card)!) + 1);
   }
 
-  const handStructure = Array.from(cardsOccurence.values()).sort().join('');
+  let handStructure = Array.from(cardsOccurence.values()).sort().join('');
+  const hasJoker = Array.from(cardsOccurence.keys()).includes('J');
+
+  if (hasJoker) {
+    const jokerNumber = cardsOccurence.get('J')!;
+    let removed = false;
+    let handStructureWithoutJoker = handStructure.split('').filter(cardNumber => {
+      if (Number(cardNumber) === jokerNumber && !removed) {
+        removed = true;
+        return false;
+      }
+      return true;
+    }).join('');
+    if (handStructure.length !== 1) {
+      handStructure = `${handStructureWithoutJoker.substring(0, handStructureWithoutJoker.length - 1)}${Number(handStructureWithoutJoker[handStructureWithoutJoker.length - 1]) + jokerNumber}`;
+    }
+}
 
   if (handStructure.length === 5) {
 
@@ -85,7 +101,7 @@ export const sortHands = (hands: { bid: number, cards: string, rank: number}[]) 
     })
 }
 
-export const step01 = (input: string) => {
+export const step02 = (input: string) => {
   const hands = [];
   const handsData = input.split('\n');
 
@@ -106,32 +122,4 @@ export const step01 = (input: string) => {
   return sum;
 }
 
-console.log(step01(input));
-
-
-
-/*
-
-// import { runExercice } from '../../util.ts';
-import { runExercice } from '../../util.js';
-import { input } from './input.ts';
-
-const regex = /^(\w+) = \((\w+), (\w+)\)$/;
-const map = {};
-let instructions = '';
-
-runExercice(input, (_, line: string, index: number) => {
-  if (index === 0) {
-    instructions = line;
-  } else if (index > 1) {
-    const match = input.match(regex);
-    map[match[1]] = {
-      'L': match[2],
-      'R': match[3]
-    }
-  }
-});
-
-console.log(map);
-
-/*
+console.log(step02(input));
